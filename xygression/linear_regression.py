@@ -43,7 +43,11 @@ class regression_model:
             pred[i] = hypo(self.theta, features[i])
         return pred
         
-
+    def get_mse(self, features, target):
+        pred = self.predict(feature)
+        n = len(target)
+        mean_sq = sum((pred - target)**2)/n
+        return np.sqrt(mean_sq)
     
 
     

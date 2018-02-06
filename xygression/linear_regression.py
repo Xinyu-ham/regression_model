@@ -10,11 +10,16 @@ else:
     
 ############ MODEL STARTS HERE ##############
 class regression_model:
-    def __init__(self, alpha = 0.01, n = 10000, origin = False):
-        '''
+    '''
         alpha is the learning rate, model spoils when large, but converge slowly when small
         n is the number of iterations
         origin = True if the origin is model includes origin
+        '''
+    def __init__(self, alpha = 0.01, n = 10000, origin = False):
+        '''
+        the default alpha and n chosen here is perfect for
+        features and target values in the order of 1.
+        scaling of parameters is highly recommended for this setting
         '''
         self.alpha = alpha
         self.n = n
@@ -23,6 +28,7 @@ class regression_model:
     def fit(self, features, target):
         target = np.array(target)
         self.target = target
+        # if origin == False, we take x0 as 1
         if self.origin:
             features = np.array(features)
         else:
@@ -32,7 +38,10 @@ class regression_model:
 
     def predict(self, features):
         features = np.concatenate([1 + np.zeros([len(features),1]), np.array(features)], axis = 1)
-        return hypo(self.theta, features)
+        pred = np.zeros(len(features))
+        for i in range(len(pred)):
+            pred[i] = hypo(self.theta, features[i])
+        return pred
         
 
     

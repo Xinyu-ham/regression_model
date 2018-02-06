@@ -37,7 +37,10 @@ class regression_model:
         self.theta = gradient_descent(self.alpha, features, target, self.n)
 
     def predict(self, features):
-        features = np.concatenate([1 + np.zeros([len(features),1]), np.array(features)], axis = 1)
+        if self.origin:
+            features = np.array(features)
+        else:
+            features = np.concatenate([1 + np.zeros([len(features),1]), np.array(features)], axis = 1)
         pred = np.zeros(len(features))
         for i in range(len(pred)):
             pred[i] = hypo(self.theta, features[i])
